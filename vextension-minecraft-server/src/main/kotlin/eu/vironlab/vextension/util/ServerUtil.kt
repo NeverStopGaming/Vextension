@@ -10,7 +10,7 @@ object ServerUtil {
      * Get the Type of a Server
      */
     @JvmStatic
-    val SERVER_TYPE: ServerType = run {
+    val SERVER_TYPE: ServerType? = run {
         return@run try {
             Class.forName("org.bukkit.Bukkit", false, this::class.java.classLoader)
             ServerType.BUKKIT
@@ -19,7 +19,7 @@ object ServerUtil {
                 Class.forName("org.spongepowered.api.Sponge", false, this::class.java.classLoader)
                 ServerType.SPONGE
             } catch (e: Exception) {
-                throw UnsupportedServerTypeException("Please use one of the Following Types of Servers: Bukkit")
+                null
             }
         }
     }

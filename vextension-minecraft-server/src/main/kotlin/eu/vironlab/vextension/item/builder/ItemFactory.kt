@@ -48,6 +48,7 @@ import eu.vironlab.vextension.item.Material
 import eu.vironlab.vextension.sponge.VextensionSponge
 import eu.vironlab.vextension.util.ServerType
 import eu.vironlab.vextension.util.ServerUtil
+import eu.vironlab.vextension.util.Vextension
 import net.kyori.adventure.text.Component
 import java.util.*
 
@@ -82,7 +83,10 @@ class ItemFactory(
                 while (VextensionBukkit.items.containsKey(key))
                     key = String.random(64)
             }
+            else -> while (Vextension.itemVerifyUniqueKey!!.invoke(key, this))
+                key = String.random(64)
         }
+        Vextension.itemKeyDone?.invoke(this, key)
         return ItemStack(
             material,
             name,
@@ -116,7 +120,10 @@ class ItemFactory(
                 if (VextensionSponge.instance.items.containsKey(key))
                     throw AlreadyExistsException("Item with the same key already exists!")
             }
+            else -> if (Vextension.itemVerifyUniqueKey!!.invoke(key, this))
+                throw AlreadyExistsException("Item with the same key already exists!")
         }
+        Vextension.itemKeyDone?.invoke(this, key)
         return ItemStack(
             material,
             name,

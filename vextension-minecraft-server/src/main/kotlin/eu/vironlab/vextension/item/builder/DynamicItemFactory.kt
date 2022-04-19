@@ -11,6 +11,7 @@ import eu.vironlab.vextension.item.Material
 import eu.vironlab.vextension.sponge.VextensionSponge
 import eu.vironlab.vextension.util.ServerType
 import eu.vironlab.vextension.util.ServerUtil
+import eu.vironlab.vextension.util.Vextension
 import net.kyori.adventure.text.Component
 import java.util.*
 
@@ -44,7 +45,10 @@ class DynamicItemFactory(
                 while (VextensionBukkit.items.containsKey(key))
                     key = String.random(64)
             }
+            else -> while (Vextension.itemVerifyUniqueKey!!.invoke(key, this))
+                key = String.random(64)
         }
+        Vextension.itemKeyDone?.invoke(this, key)
         return ItemStack(
             material.invoke(uuid),
             name.invoke(uuid),

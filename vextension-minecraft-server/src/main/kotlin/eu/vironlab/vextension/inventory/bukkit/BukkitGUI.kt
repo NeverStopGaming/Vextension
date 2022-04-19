@@ -37,6 +37,7 @@
 package eu.vironlab.vextension.inventory.bukkit
 
 import eu.vironlab.vextension.bukkit.VextensionBukkit
+import eu.vironlab.vextension.concurrent.task.QueuedTask
 import eu.vironlab.vextension.concurrent.task.queueTask
 import eu.vironlab.vextension.extension.tryBukkitPlayer
 import eu.vironlab.vextension.inventory.gui.GUI
@@ -50,6 +51,7 @@ import eu.vironlab.vextension.util.UnsupportedServerTypeException
 import net.kyori.adventure.text.Component
 import java.util.*
 import org.bukkit.Bukkit
+import org.bukkit.scheduler.BukkitTask
 
 class BukkitGUI(override val lines: Int, override val name: Component) : GUI {
     var contents: MutableMap<Int, ItemStackLike> = mutableMapOf()
