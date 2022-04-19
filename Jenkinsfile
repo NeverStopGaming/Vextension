@@ -17,11 +17,11 @@ pipeline {
                 sh "./gradlew build";
             }
         }
-        stage("Test") {
+        /*stage("Test") {
             steps {
                 sh "./gradlew test";
             }
-        }
+        }*/
         stage("Publish") {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
