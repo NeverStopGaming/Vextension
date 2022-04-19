@@ -110,9 +110,9 @@ subprojects {
     }
     tasks {
 
-        test {
-            useJUnitPlatform()
-        }
+        //test {
+        //    useJUnitPlatform()
+        //}
 
         //Set the Name of the Sources Jar
         kotlinSourcesJar {
