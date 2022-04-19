@@ -14,7 +14,7 @@ plugins {
     id("java")
     id("maven-publish")
     id("com.github.johnrengelman.shadow") version "6.1.0"
-    kotlin("jvm") version "1.5.10"
+    kotlin("jvm") version "1.6.20"
     id("org.jetbrains.dokka") version "1.4.20"
 }
 
@@ -97,8 +97,8 @@ subprojects {
                     }
                 }
                 repositories {
-                    maven("https://repo.vironlab.eu/repository/maven-snapshot/") {
-                        this.name = "vironlab-snapshot"
+                    maven("https://repo.neverstopgaming.net/private/") {
+                        this.name = "nsg-private"
                         credentials {
                             this.password = System.getProperty("publishPassword")
                             this.username = System.getProperty("publishName")
