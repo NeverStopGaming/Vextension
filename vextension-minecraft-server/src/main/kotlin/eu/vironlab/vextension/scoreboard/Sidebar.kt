@@ -48,8 +48,6 @@ interface Sidebar {
 
     val lines: MutableMap<String, DataPair<String, SidebarLine>>
 
-    var scoreboardProceed: ((UUID) -> Scoreboard)?
-
     fun addLine(line: SidebarLine)
 
     fun updateLine(name: String, line: SidebarLine)

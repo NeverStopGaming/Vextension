@@ -74,7 +74,7 @@ class BukkitSidebar(
         Bukkit.getPluginManager().registerEvents(this, VextensionBukkit.instance)
     }
 
-    override var scoreboardProceed: ((UUID) -> Scoreboard)? = null
+    var scoreboardProceed: ((UUID) -> Scoreboard)? = null
 
     fun useScoreboard(proceed: ((UUID) -> Scoreboard)?) {
         scoreboardProceed = proceed
