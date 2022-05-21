@@ -19,21 +19,95 @@ class DynamicItemFactory(
     private var material: (UUID?) -> Material
 ) : Factory<ItemStack>, ItemStackLike {
     private var name: ((UUID?) -> Component?) = { null }
+    fun name(component: Component?) = name { component }
+    fun name(name: (UUID?) -> Component?): DynamicItemFactory {
+        this.name = name
+        return this
+    }
     private var amount: ((UUID?) -> Int) = { 1 }
+    fun amount(amount: Int) = amount { amount }
+    fun amount(amount: (UUID?) -> Int): DynamicItemFactory {
+        this.amount = amount
+        return this
+    }
     private var damage: ((UUID?) -> Int) = { 0 }
+    fun damage(damage: Int) = damage { damage }
+    fun damage(damage: (UUID?) -> Int): DynamicItemFactory {
+        this.damage = damage
+        return this
+    }
     private var lore: ((UUID?) -> MutableList<Component>) = { mutableListOf() }
+    fun lore(lore: MutableList<Component>) = lore { lore }
+    fun lore(lore: (UUID?) -> MutableList<Component>): DynamicItemFactory {
+        this.lore = lore
+        return this
+    }
     private var unbreakable: ((UUID?) -> Boolean) = { false }
+    fun unbreakable(unbreakable: Boolean) = unbreakable { unbreakable }
+    fun unbreakable(unbreakable: (UUID?) -> Boolean): DynamicItemFactory {
+        this.unbreakable = unbreakable
+        return this
+    }
     private var blockInteract: ((UUID?) -> Boolean) = { false }
+    fun blockInteract(blockInteract: Boolean) = blockInteract { blockInteract }
+    fun blockInteract(blockInteract: (UUID?) -> Boolean): DynamicItemFactory {
+        this.blockInteract = blockInteract
+        return this
+    }
     private var blockClick: ((UUID?) -> Boolean) = { false }
+    fun blockClick(blockClick: Boolean) = blockClick { blockClick }
+    fun blockClick(blockClick: (UUID?) -> Boolean): DynamicItemFactory {
+        this.blockClick = blockClick
+        return this
+    }
     private var blockDrop: ((UUID?) -> Boolean) = { false }
-    private var dropHandler: ((ItemStack, UUID) -> Unit)? = null
-    private var interactHandler: ((ItemStack, UUID, Optional<InteractType>) -> Unit)? = null
-    private var clickHandler: ((ItemStack, UUID) -> Unit)? = null
-    private var permission: ((UUID?) -> String?) = { null }
-    private var skullOwner: ((UUID?) -> UUID?) = { null }
-    private var skullTexture: ((UUID?) -> String?) = { null }
-    private var properties: ((UUID?) -> MutableMap<String, String>) = { mutableMapOf() }
+    fun blockDrop(blockDrop: Boolean) = blockDrop { blockDrop }
+    fun blockDrop(blockDrop: (UUID?) -> Boolean): DynamicItemFactory {
+        this.blockDrop = blockDrop
+        return this
+    }
 
+    private var dropHandler: ((ItemStack, UUID) -> Unit)? = null
+    fun dropHandler(dropHandler: ((ItemStack, UUID) -> Unit)?): DynamicItemFactory {
+        this.dropHandler = dropHandler
+        return this
+    }
+
+    private var interactHandler: ((ItemStack, UUID, Optional<InteractType>) -> Unit)? = null
+    fun interactHandler(interactHandler: ((ItemStack, UUID, Optional<InteractType>) -> Unit)?): DynamicItemFactory {
+        this.interactHandler = interactHandler
+        return this
+    }
+    private var clickHandler: ((ItemStack, UUID) -> Unit)? = null
+    fun clickHandler(clickHandler: ((ItemStack, UUID) -> Unit)?): DynamicItemFactory {
+        this.clickHandler = clickHandler
+        return this
+    }
+    private var permission: ((UUID?) -> String?) = { null }
+    fun permission(permission: String?) = permission { permission }
+    fun permission(permission: (UUID?) -> String?): DynamicItemFactory {
+        this.permission = permission
+        return this
+    }
+    private var skullOwner: ((UUID?) -> UUID?) = { null }
+    fun skullOwner(skullOwner: UUID?) = skull { skullOwner }
+    fun skull(uuid: (UUID?) -> UUID?): DynamicItemFactory {
+        this.skullOwner = uuid
+        return this
+    }
+    private var skullTexture: ((UUID?) -> String?) = { null }
+    fun texture(skullTexture: String?) = texture { skullTexture }
+    fun texture(skullTexture: (UUID?) -> String?): DynamicItemFactory {
+        this.skullTexture = skullTexture
+        return this
+    }
+
+    private var properties: ((UUID?) -> MutableMap<String, String>) = { mutableMapOf() }
+    fun properties(properties: MutableMap<String, String>) = properties { properties }
+    fun properties(properties: (UUID?) -> MutableMap<String, String>): DynamicItemFactory {
+        this.properties = properties
+        return this
+    }
     fun create(uuid: UUID?): ItemStack {
         @Suppress("DuplicatedCode") var key: String = String.random(64)
         when (ServerUtil.SERVER_TYPE) {
@@ -81,82 +155,14 @@ class DynamicItemFactory(
             properties.invoke(uuid)
         )
     }
-    
+
     override fun create(): ItemStack = create(null)
-    fun name(name: (UUID?) -> Component): DynamicItemFactory {
-        this.name = name
-        return this
-    }
 
-    fun skull(uuid: (UUID?) -> UUID): DynamicItemFactory {
-        this.skullOwner = uuid
-        return this
-    }
-
-    fun amount(amount: (UUID?) -> Int): DynamicItemFactory {
-        this.amount = amount
-        return this
-    }
-
-    fun damage(damage: (UUID?) -> Int): DynamicItemFactory {
-        this.damage = damage
-        return this
-    }
-
-    fun lore(lore: (UUID?) -> MutableList<Component>): DynamicItemFactory {
-        this.lore = lore
-        return this
-    }
-
-    fun unbreakable(unbreakable: (UUID?) -> Boolean): DynamicItemFactory {
-        this.unbreakable = unbreakable
-        return this
-    }
-
-    fun blockInteract(blockInteract: (UUID?) -> Boolean): DynamicItemFactory {
-        this.blockInteract = blockInteract
-        return this
-    }
-
-    fun blockClick(blockClick: (UUID?) -> Boolean): DynamicItemFactory {
-        this.blockClick = blockClick
-        return this
-    }
-
-    fun blockDrop(blockDrop: (UUID?) -> Boolean): DynamicItemFactory {
-        this.blockDrop = blockDrop
-        return this
-    }
-
-    fun interactHandler(interactHandler: ((ItemStack, UUID, Optional<InteractType>) -> Unit)?): DynamicItemFactory {
-        this.interactHandler = interactHandler
-        return this
-    }
-
-    fun clickHandler(clickHandler: ((ItemStack, UUID) -> Unit)?): DynamicItemFactory {
-        this.clickHandler = clickHandler
-        return this
-    }
-
-    fun dropHandler(dropHandler: ((ItemStack, UUID) -> Unit)?): DynamicItemFactory {
-        this.dropHandler = dropHandler
-        return this
-    }
-
+    fun blockAll(block: Boolean) = blockAll { block }
     fun blockAll(blockAll: (UUID?) -> Boolean): DynamicItemFactory {
         this.blockDrop = blockAll
         this.blockInteract = blockAll
         this.blockClick = blockAll
-        return this
-    }
-
-    fun permission(permission: (UUID?) -> String?): DynamicItemFactory {
-        this.permission = permission
-        return this
-    }
-
-    fun properties(properties: (UUID?) -> MutableMap<String, String>): DynamicItemFactory {
-        this.properties = properties
         return this
     }
 
