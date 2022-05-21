@@ -202,9 +202,11 @@ subprojects {
                 }
             }
         }
-
         compileKotlin {
-            kotlinOptions.jvmTarget = "16"
+            kotlinOptions.jvmTarget = "17"
+        }
+        compileJava {
+
         }
 
         withType<JavaCompile> {
